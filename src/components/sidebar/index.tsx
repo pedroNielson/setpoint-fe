@@ -12,6 +12,7 @@ import {
   Avatar,
   Button,
 } from "@mui/material";
+import Link from "next/link";
 import HomeIcon from "@mui/icons-material/Home";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import EventIcon from "@mui/icons-material/Event";
@@ -19,9 +20,20 @@ import ChatIcon from "@mui/icons-material/Chat";
 import Image from "next/image";
 import logo from "@/assets/Setpoint.png";
 import SearchBar from "../searchBar";
+
 const drawerWidth = 240;
 
 export default function Sidebar() {
+  const mainMenu = [
+    { text: "Home", icon: <HomeIcon />, href: "/home" },
+    { text: "Eventos", icon: <EventIcon />, href: "/events" },
+  ];
+
+  const footerMenu = [
+    { text: "Feedback", icon: <ChatIcon />, href: "#" },
+    { text: "Ajuda", icon: <HelpOutlineIcon />, href: "#" },
+  ];
+
   return (
     <Drawer
       variant="permanent"
@@ -31,19 +43,12 @@ export default function Sidebar() {
         [`& .MuiDrawer-paper`]: {
           width: drawerWidth,
           boxSizing: "border-box",
-          backgroundColor: "#f8f9fa", // cor de fundo clean
+          backgroundColor: "#f8f9fa",
         },
-        borderRight: "1px solid #e0e0e0", // linha sutil à direita
+        borderRight: "1px solid #e0e0e0",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          p: 2,
-        }}
-      >
+      <Box sx={{ display: "flex", alignItems: "center", p: 2 }}>
         <Image
           src={logo}
           alt="Setpoint Logo"
@@ -51,6 +56,7 @@ export default function Sidebar() {
           height={360 / 9}
         />
       </Box>
+
       <Box sx={{ display: "flex", alignItems: "center", pl: 2, pb: 2 }}>
         <Avatar>AS</Avatar>
         <Box sx={{ p: 2 }}>
@@ -65,14 +71,9 @@ export default function Sidebar() {
 
       <Box sx={{ overflow: "auto" }}>
         <List>
-          {[
-            { text: "Home", icon: <HomeIcon /> },
-            // { text: "Campeonatos", icon: <SportsIcon /> },
-            { text: "Eventos", icon: <EventIcon /> },
-            // { text: "Participantes", icon: <PeopleIcon /> },
-          ].map((item, index) => (
+          {mainMenu.map((item) => (
             <ListItem key={item.text} disablePadding>
-              <ListItemButton>
+              <ListItemButton component={Link} href={item.href}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>
@@ -82,16 +83,12 @@ export default function Sidebar() {
       </Box>
 
       <Box sx={{ flexGrow: 1 }} />
+
       <Box sx={{ overflow: "auto" }}>
         <List>
-          {[
-            { text: "Feedback", icon: <ChatIcon /> },
-            // { text: "Campeonatos", icon: <SportsIcon /> },
-            { text: "Ajuda", icon: <HelpOutlineIcon /> },
-            // { text: "Participantes", icon: <PeopleIcon /> },
-          ].map((item, index) => (
+          {footerMenu.map((item) => (
             <ListItem key={item.text} disablePadding>
-              <ListItemButton>
+              <ListItemButton component={Link} href={item.href}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>
@@ -99,7 +96,9 @@ export default function Sidebar() {
           ))}
         </List>
       </Box>
+
       <Divider />
+
       <Box
         sx={{
           p: 2,
@@ -110,7 +109,7 @@ export default function Sidebar() {
           justifyContent: "flex-end",
         }}
       >
-        <Box sx={{ fontWeight: "bold" }}>Faça um upgrade, vá alem!</Box>
+        <Box sx={{ fontWeight: "bold" }}>Faça um upgrade, vá além!</Box>
         <Box sx={{ fontSize: "0.875rem", color: "gray", pb: 2 }}>
           Crie campeonatos, acesse relatórios e fidelize atletas
         </Box>
